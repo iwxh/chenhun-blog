@@ -1,0 +1,355 @@
+/*
+Theme Name: 晨昏札记（Blocksy 子主题）
+Author: Site Owner
+Description: 面向个人记录站的轻量中文 WordPress 主题，专注技术、生活、摄影与阶段性复盘。
+Version: 1.3.0
+Template: blocksy
+Requires at least: 6.2
+Requires PHP: 7.4
+Text Domain: yiyu-notes
+*/
+
+:root {
+  color-scheme: dark;
+  --outer: #05070a;
+  --paper: #080c12;
+  --content-layer: #0b0f14;
+  --surface: rgba(17, 24, 39, .72);
+  --surface-solid: #111827;
+  --surface-raised: #18212f;
+  --ink: #e5e7eb;
+  --muted: #9ca3af;
+  --line: rgba(255, 255, 255, .08);
+  --accent: #38bdf8;
+  --accent-hover: #67d0fb;
+  --accent-soft: rgba(56, 189, 248, .085);
+  --code: #070a0e;
+  --radius: 18px;
+  --shadow: 0 18px 48px rgba(0, 0, 0, .28);
+  --content: 1160px;
+  --reading: 760px;
+
+  /* Blocksy's palette is loaded by the parent theme; keep it dark as well. */
+  --theme-palette-color-1: #38bdf8;
+  --theme-palette-color-2: #22d3ee;
+  --theme-palette-color-3: #cbd5e1;
+  --theme-palette-color-4: #f1f5f9;
+  --theme-palette-color-5: rgba(255, 255, 255, .09);
+  --theme-palette-color-6: #111827;
+  --theme-palette-color-7: #080c12;
+  --theme-palette-color-8: #111827;
+  --theme-text-color: #e5e7eb;
+  --theme-headings-color: #f1f5f9;
+  --theme-border-color: rgba(255, 255, 255, .09);
+  --theme-link-initial-color: #38bdf8;
+  --theme-link-hover-color: #67d0fb;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { min-height: 100%; scroll-behavior: smooth; background: var(--outer); }
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background: var(--outer);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  text-rendering: optimizeLegibility;
+  overflow-wrap: anywhere;
+  overflow-x: hidden;
+}
+body.wp-theme-blocksy { background: var(--outer) !important; color: var(--ink); }
+#main-container, .site, .site-content, .site-main, main#main-content {
+  background-color: var(--paper) !important;
+  color: var(--ink);
+}
+main#main-content { position: relative; isolation: isolate; min-height: 65vh; }
+h1, h2, h3, h4, h5, h6 { color: #f1f5f9; }
+::selection { background: rgba(56, 189, 248, .28); color: #fff; }
+img, video { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration-color: rgba(56, 189, 248, .45); text-underline-offset: .2em; }
+a:hover { color: var(--accent); }
+button, input, textarea { font: inherit; }
+:focus-visible { outline: 3px solid rgba(56, 189, 248, .38); outline-offset: 3px; }
+.site-shell { width: min(calc(100% - 40px), var(--content)); margin-inline: auto; }
+.skip-link { position: fixed; z-index: 999; top: 10px; left: 10px; padding: 10px 14px; background: var(--accent); color: #061018; transform: translateY(-160%); }
+.skip-link:focus { transform: none; }
+
+.site-header { position: relative; z-index: 20; border-bottom: 1px solid var(--line); background: rgba(5, 7, 10, .94) !important; box-shadow: 0 10px 34px rgba(0, 0, 0, .22); backdrop-filter: blur(14px); }
+.header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+.brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; font-weight: 750; letter-spacing: .06em; }
+.brand-mark { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--ink); border-radius: 50%; font-family: Georgia, serif; font-size: 14px; }
+.menu-toggle { display: none; min-width: 44px; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); }
+.primary-menu { display: flex; align-items: center; gap: 26px; margin: 0; padding: 0; list-style: none; }
+.primary-menu a { text-decoration: none; color: var(--muted); font-size: 15px; }
+.primary-menu a:hover, .primary-menu .current-menu-item > a, .primary-menu .current_page_item > a { color: var(--ink); }
+
+.hero {
+  position: relative;
+  padding: clamp(64px, 9vw, 118px) 0 82px;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 78% 24%, rgba(56, 189, 248, .12), transparent 31%),
+    radial-gradient(circle at 58% 8%, rgba(129, 140, 248, .07), transparent 28%),
+    linear-gradient(180deg, #080c12 0%, #0b0f14 100%);
+  overflow: hidden;
+}
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr); align-items: center; gap: clamp(42px, 8vw, 110px); }
+.eyebrow { margin: 0 0 18px; color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.hero h1 { max-width: 780px; margin: 0; font-family: Georgia, "Songti SC", "STSong", serif; font-size: clamp(40px, 6vw, 74px); line-height: 1.12; letter-spacing: -.025em; font-weight: 650; }
+.hero-lead { max-width: 680px; margin: 26px 0 0; color: var(--muted); font-size: clamp(17px, 2vw, 20px); line-height: 1.9; }
+.button-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+.button { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border: 1px solid var(--accent); border-radius: 999px; background: var(--accent); color: #061018; text-decoration: none; font-size: 15px; font-weight: 650; }
+.button:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #061018; }
+.button-quiet { border-color: var(--line); background: transparent; color: var(--ink); }
+.button-quiet:hover { border-color: rgba(56, 189, 248, .35); background: var(--accent-soft); color: var(--accent-hover); }
+.record-card { position: relative; min-height: 350px; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(255, 255, 255, .11); border-radius: 32px 32px 10px 32px; background: linear-gradient(145deg, rgba(24, 33, 47, .82), rgba(11, 15, 20, .9)); box-shadow: 0 24px 70px rgba(0, 0, 0, .42), inset 0 1px 0 rgba(255, 255, 255, .035); overflow: hidden; }
+.record-card::after { content: ""; position: absolute; right: -65px; bottom: -80px; width: 210px; height: 210px; border: 1px solid rgba(56, 189, 248, .35); border-radius: 50%; box-shadow: 0 0 0 28px var(--accent-soft), 0 0 0 29px rgba(129, 140, 248, .12); }
+.record-card-label { color: var(--muted); font-size: 13px; letter-spacing: .12em; }
+.record-card blockquote { position: relative; z-index: 1; margin: 34px 0 50px; font-family: Georgia, "Songti SC", serif; font-size: 22px; line-height: 1.65; }
+.record-card time { position: relative; z-index: 1; color: var(--muted); font-size: 13px; }
+
+.home-section { position: relative; padding: 80px 0; background: var(--content-layer); }
+.home-section:nth-of-type(odd) { background: #090d13; }
+.home-section + .home-section { border-top: 1px solid var(--line); }
+.section-head { margin-bottom: 30px; display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+.section-title { margin: 0; font-family: Georgia, "Songti SC", serif; font-size: clamp(27px, 4vw, 38px); line-height: 1.3; }
+.section-note { margin: 7px 0 0; color: var(--muted); }
+.text-link { flex: 0 0 auto; color: var(--accent); font-size: 14px; }
+
+.post-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.post-card { min-width: 0; padding: 27px; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .025), 0 16px 40px rgba(0, 0, 0, .16); }
+.post-card:hover { border-color: rgba(56, 189, 248, .24); background: rgba(24, 33, 47, .82); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04), 0 20px 48px rgba(0, 0, 0, .24); }
+.post-card-meta, .entry-meta { display: flex; flex-wrap: wrap; gap: 8px 14px; color: var(--muted); font-size: 13px; }
+.post-card-meta a, .entry-meta a { color: var(--accent); text-decoration: none; }
+.post-card h3 { margin: 17px 0 10px; font-size: 21px; line-height: 1.48; }
+.post-card h3 a { text-decoration: none; }
+.post-card-excerpt { margin: 0 0 24px; color: var(--muted); font-size: 15px; line-height: 1.8; }
+.post-card-more { margin-top: auto; color: var(--accent); font-size: 14px; text-decoration: none; }
+
+.category-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.category-card { min-height: 150px; padding: 24px; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(17, 24, 39, .46); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .022); text-decoration: none; }
+.category-card:hover { border-color: rgba(56, 189, 248, .28); background: var(--surface); box-shadow: var(--shadow); }
+.category-index { color: var(--accent); font: 14px Georgia, serif; }
+.category-card strong { margin: 16px 0 5px; font-size: 18px; }
+.category-card small { color: var(--muted); line-height: 1.6; }
+
+.featured-list { border-top: 1px solid var(--ink); }
+.featured-item { padding: 22px 4px; display: grid; grid-template-columns: 72px 1fr auto; align-items: center; gap: 22px; border-bottom: 1px solid var(--line); text-decoration: none; }
+.featured-item:hover { padding-left: 12px; }
+.featured-number { color: var(--muted); font: 15px Georgia, serif; }
+.featured-item strong { font-size: 18px; }
+.featured-item span:last-child { color: var(--accent); }
+.featured-placeholder { cursor: default; }
+
+.about-strip { padding: clamp(34px, 6vw, 64px); display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; border: 1px solid rgba(56, 189, 248, .14); border-radius: 26px; background: linear-gradient(135deg, rgba(17, 24, 39, .88), rgba(11, 15, 20, .94)); box-shadow: 0 24px 64px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .03); }
+.about-strip h2 { margin: 0; font-family: Georgia, "Songti SC", serif; font-size: clamp(28px, 4vw, 42px); line-height: 1.35; }
+.about-strip p { margin: 0; color: #c3cad4; font-size: 17px; line-height: 2; }
+.about-strip-copy { display: grid; gap: 14px; }
+.intro-actions { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+.contact-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.contact-link { min-height: 42px; padding: 8px 12px; display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255, 255, 255, .025); color: var(--ink); text-decoration: none; font-size: 13px; line-height: 1.35; }
+.contact-link:hover { border-color: rgba(56, 189, 248, .35); background: var(--accent-soft); color: var(--accent-hover); }
+.contact-icon { width: 18px; height: 18px; flex: 0 0 auto; color: var(--accent); }
+.contact-label { color: var(--muted); }
+.contact-value { overflow-wrap: anywhere; }
+
+.page-header { padding: 72px 0 42px; border-bottom: 1px solid var(--line); background: radial-gradient(circle at 18% 0%, rgba(56, 189, 248, .08), transparent 30%), var(--content-layer); }
+.page-header-inner { max-width: 850px; }
+.page-header h1 { margin: 0; font: 650 clamp(36px, 6vw, 58px)/1.25 Georgia, "Songti SC", serif; letter-spacing: -.02em; }
+.page-header p { max-width: 680px; margin: 18px 0 0; color: var(--muted); font-size: 17px; }
+.filter-nav { padding: 0 0 34px; display: flex; flex-wrap: wrap; gap: 10px; }
+.filter-nav a { padding: 7px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); text-decoration: none; font-size: 14px; }
+.filter-nav a:hover, .filter-nav .is-current { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.archive-list { padding-top: 18px; padding-bottom: 80px; }
+.archive-list .post-card { margin-bottom: 14px; padding: 28px; display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 30px; border: 1px solid var(--line); border-radius: 16px; background: rgba(17, 24, 39, .58); }
+.archive-list .post-card:hover { border-color: rgba(56, 189, 248, .22); background: rgba(17, 24, 39, .78); }
+.archive-list .post-card h3 { margin-top: 0; font-size: clamp(22px, 3vw, 28px); }
+.archive-list .post-card-more { align-self: center; }
+.pagination { margin-top: 36px; }
+.nav-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.page-numbers { min-width: 42px; height: 42px; display: grid; place-items: center; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; }
+.page-numbers.current { background: var(--accent); border-color: var(--accent); color: #061018; }
+.empty-state { padding: 54px 0 90px; color: var(--muted); }
+
+.single-wrap { width: min(calc(100% - 40px), 860px); margin-inline: auto; padding: 0 clamp(24px, 5vw, 50px) 1px; border-right: 1px solid var(--line); border-left: 1px solid var(--line); background: linear-gradient(180deg, rgba(17, 24, 39, .54), rgba(11, 15, 20, .76)); box-shadow: 0 26px 80px rgba(0, 0, 0, .2); }
+.entry-header { padding: clamp(64px, 9vw, 104px) 0 42px; }
+.entry-header h1 { margin: 15px 0 22px; font: 650 clamp(35px, 6vw, 56px)/1.25 Georgia, "Songti SC", serif; letter-spacing: -.02em; }
+.entry-content { font-size: 17px; line-height: 1.95; }
+.entry-content > * { margin-top: 0; margin-bottom: 1.5em; }
+.entry-content h2, .entry-content h3, .entry-content h4 { margin-top: 2.2em; margin-bottom: .8em; line-height: 1.4; }
+.entry-content h2 { font-size: 29px; }
+.entry-content h3 { font-size: 23px; }
+.entry-content a { color: var(--accent); }
+.entry-content blockquote { margin-inline: 0; padding: 4px 0 4px 22px; border-left: 3px solid var(--accent); color: #c3cad4; }
+.entry-content pre { max-width: 100%; padding: 20px 22px; overflow-x: auto; border-radius: 12px; background: var(--code); color: #e7eee9; font: 14px/1.75 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; tab-size: 2; -webkit-overflow-scrolling: touch; }
+.entry-content code { padding: .16em .38em; border-radius: 5px; background: #1b2532; color: #d7e3ec; font: .9em ui-monospace, SFMono-Regular, Consolas, monospace; }
+.entry-content pre code { padding: 0; background: transparent; color: inherit; }
+.entry-content table { width: 100%; display: block; overflow-x: auto; border-collapse: collapse; }
+.entry-content th, .entry-content td { padding: 10px 14px; border: 1px solid var(--line); }
+.entry-content figure { max-width: 100%; margin-inline: 0; }
+.entry-content figcaption { margin-top: 8px; color: var(--muted); font-size: 13px; text-align: center; }
+.entry-tags { margin-top: 42px; display: flex; flex-wrap: wrap; gap: 8px; }
+.entry-tags a { padding: 5px 11px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); text-decoration: none; font-size: 13px; }
+.post-navigation { margin: 62px 0 20px; padding-top: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; border-top: 1px solid var(--line); }
+.post-navigation a { display: block; text-decoration: none; }
+.post-navigation .nav-next { text-align: right; }
+.nav-kicker { display: block; margin-bottom: 4px; color: var(--muted); font-size: 12px; }
+.back-home { margin: 22px 0 80px; text-align: center; }
+.comments-area { margin: 56px 0 80px; }
+
+.about-page { padding-right: clamp(24px, 5vw, 58px); padding-bottom: 90px; padding-left: clamp(24px, 5vw, 58px); border-right: 1px solid var(--line); border-left: 1px solid var(--line); background: linear-gradient(180deg, rgba(17, 24, 39, .5), rgba(11, 15, 20, .75)); box-shadow: 0 26px 80px rgba(0, 0, 0, .18); }
+.about-intro { padding: 64px 0 48px; border-bottom: 1px solid var(--line); }
+.about-intro h1 { max-width: 800px; margin: 0; font: 650 clamp(38px, 6vw, 62px)/1.3 Georgia, "Songti SC", serif; }
+.about-intro p { max-width: 730px; margin: 24px 0 0; color: var(--muted); font-size: 18px; line-height: 2; }
+.about-section { padding: 56px 0; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 60px; border-bottom: 1px solid var(--line); }
+.about-section h2 { margin: 0; font-size: 18px; }
+.about-copy { max-width: 700px; }
+.about-copy p:first-child { margin-top: 0; }
+.about-copy ul { padding-left: 1.2em; columns: 2; column-gap: 40px; }
+.contact-note { padding: 22px; border: 1px solid var(--line); border-radius: 14px; background: rgba(17, 24, 39, .74); }
+.contact-list { margin: 0; padding: 0; display: grid; gap: 12px; list-style: none; }
+.contact-list a { color: var(--accent); overflow-wrap: anywhere; }
+.contact-list .contact-link { width: fit-content; color: var(--ink); }
+
+.site-footer { padding: 52px 0 30px; border-top: 1px solid rgba(56, 189, 248, .12); background: var(--outer) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .018); }
+.footer-main { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px; }
+.footer-title { margin: 0 0 8px; font-weight: 750; }
+.footer-description { max-width: 570px; margin: 0; color: var(--muted); font-size: 14px; }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 18px; font-size: 14px; }
+.footer-links .contact-link { min-height: 38px; padding: 6px 10px; }
+
+input:not([type="submit"]):not([type="button"]), textarea, select {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+/* Neutralize light backgrounds from Gutenberg blocks and Blocksy defaults. */
+.wp-block-group:not(.has-background),
+.wp-block-columns:not(.has-background),
+.wp-block-media-text:not(.has-background),
+.entry-content,
+article { color: var(--ink); }
+.has-white-background-color,
+.has-palette-color-7-background-color,
+.has-palette-color-8-background-color,
+.wp-block-group.has-background[style*="#fff"],
+.wp-block-group.has-background[style*="#FFF"],
+[style*="background-color: #fff"],
+[style*="background-color:#fff"] { background-color: var(--surface-solid) !important; }
+.wp-block-table table, .wp-block-code, .wp-block-preformatted { background-color: rgba(7, 10, 14, .88); }
+.footer-meta { margin-top: 34px; padding-top: 18px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+
+@media (max-width: 920px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .record-card { min-height: 270px; }
+  .post-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .archive-list .post-card { grid-template-columns: 120px minmax(0, 1fr); }
+  .archive-list .post-card-more { grid-column: 2; }
+}
+
+@media (max-width: 720px) {
+  .site-shell, .single-wrap { width: min(calc(100% - 32px), var(--content)); }
+  .header-inner { min-height: 66px; flex-wrap: wrap; }
+  .has-js .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+  .site-navigation { width: 100%; padding-bottom: 10px; }
+  .has-js .site-navigation { position: absolute; top: 66px; right: 16px; left: 16px; width: auto; display: none; padding: 10px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface-raised); box-shadow: var(--shadow); }
+  .has-js .site-navigation.is-open { display: block; }
+  .primary-menu { display: block; }
+  .primary-menu a { min-height: 44px; display: flex; align-items: center; padding: 6px 10px; }
+  .hero { padding-top: 54px; }
+  .hero h1 { font-size: clamp(38px, 12vw, 54px); }
+  .record-card { min-height: 250px; padding: 24px; }
+  .home-section { padding: 58px 0; }
+  .section-head { align-items: start; }
+  .post-grid, .category-grid { grid-template-columns: 1fr; }
+  .post-card { padding: 24px; }
+  .featured-item { grid-template-columns: 42px 1fr; gap: 12px; }
+  .featured-item span:last-child { display: none; }
+  .about-strip { grid-template-columns: 1fr; gap: 24px; }
+  .archive-list .post-card { padding: 24px; grid-template-columns: 1fr; gap: 12px; }
+  .archive-list .post-card-more { grid-column: auto; }
+  .entry-content { font-size: 16.5px; line-height: 1.95; }
+  .entry-content h2 { font-size: 26px; }
+  .post-navigation { grid-template-columns: 1fr; }
+  .post-navigation .nav-next { text-align: left; }
+  .about-section { grid-template-columns: 1fr; gap: 18px; }
+  .about-copy ul { columns: 1; }
+  .footer-main { grid-template-columns: 1fr; gap: 24px; }
+  .footer-links { justify-content: flex-start; }
+  .contact-links, .footer-links { align-items: stretch; }
+  .contact-link { max-width: 100%; }
+  .single-wrap { padding-right: 20px; padding-left: 20px; border-right-color: rgba(255, 255, 255, .06); border-left-color: rgba(255, 255, 255, .06); }
+  .about-page { width: 100%; padding-right: 16px; padding-left: 16px; border-right: 0; border-left: 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a, .post-card, .category-card, .featured-item, .button { transition: color .18s ease, background-color .18s ease, border-color .18s ease, padding .18s ease, box-shadow .18s ease; }
+}
+
+@media print {
+  .site-header, .site-footer, .post-navigation, .back-home, .comments-area { display: none; }
+  body { background: #fff; color: #000; }
+  .single-wrap { width: 100%; }
+}
+
+/* Tools dropdown navigation. */
+.primary-menu > .menu-item-has-children { position: relative; }
+.primary-menu .sub-menu {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 12px);
+  right: 0;
+  min-width: 190px;
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-raised);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+}
+.primary-menu .sub-menu a {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 7px 11px;
+  border-radius: 9px;
+  white-space: nowrap;
+}
+.primary-menu .sub-menu a:hover,
+.primary-menu .sub-menu a:focus-visible {
+  color: var(--ink);
+  background: var(--accent-soft);
+}
+.primary-menu > .menu-item-has-children:hover > .sub-menu,
+.primary-menu > .menu-item-has-children:focus-within > .sub-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (max-width: 720px) {
+  .primary-menu .sub-menu {
+    position: static;
+    min-width: 0;
+    margin: 0 0 4px 12px;
+    padding: 0 0 0 10px;
+    border: 0;
+    border-left: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .primary-menu .sub-menu a { color: var(--muted); }
+}
